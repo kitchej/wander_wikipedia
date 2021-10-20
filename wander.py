@@ -15,6 +15,7 @@ def show_usage():
     print("USAGE:\n"
           "NOTE: You may need to put the link in quotes if using Powershell \n"
           "wander.py [Wikipedia article link] [number of links to click]\n"
+          "wander.py [Wikipedia article link] [number of links to click] [seed]\n"
           "wander.py help\n"
           "wander.py (defaults to Wikipedia page for python and clicks 25 links)\n")
 
@@ -35,7 +36,8 @@ def follow_links_wikipedia(link, num_links_to_click, iterations=0):
     soup = BeautifulSoup(html.text, 'html.parser')
     a_tags = soup.find_all('a')
     page_links = [tag.get('href') for tag in a_tags if tag.get('href') is not None and
-                  re.fullmatch(REGEX_PATTERN, tag.get('href')) is not None]
+                  re.fullmatch(REGEX_PATTERN, tag.get('href')) is not None and
+                  tag.get('href') != "/wiki/Main_Page"]
     if len(page_links) == 0:
         return link
     new_link = f"{WIKI_URL_BASE}{random.choice(page_links)}"
@@ -64,6 +66,16 @@ def main():
                 show_usage()
                 return
 
+            try:
+                seed = sys.argv[3]
+                seed = int(seed)
+            except IndexError:
+                seed = random.randint(0, sys.maxsize)
+            except ValueError:
+                print(f"Bad argument {sys.argv[3]} for seed. Seed must be an integer")
+                show_usage()
+                return
+
             if WIKI_URL_BASE not in start:
                 print(f"Bad argument {start} for starting link. Must be a valid Wikipedia article link\n"
                       f"Example: https://en.Wikipedia.org/wiki/Python_(programming_language)\n")
@@ -85,11 +97,14 @@ def main():
     else:
         start = DEFAULT_START
         iterations = DEFAULT_ITERATIONS
+        seed = random.randint(0, sys.maxsize)
 
+    random.seed(seed)
     print("")
     end = follow_links_wikipedia(start, iterations)
     print(f"You started at: {get_article_name(start)} | Link: {start}")
     print(f"You wandered to: {get_article_name(end)} | Link: {end}")
+    print(f"Seed: {seed}")
     print("")
 
 

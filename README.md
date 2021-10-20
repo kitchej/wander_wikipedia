@@ -21,7 +21,9 @@ allowing me to sit back and relax while a computer does the hard work of clickin
 
 *** You may need to put your link in quotes if using Powershell ***  
 
-`wander.py [Wikipedia article link] [number of links to click]`
+`wander.py [Wikipedia article link] [number of links to click]`  
+
+`wander.py [Wikipedia article link] [number of links to click] [seed]`  
 
 `wander.py help`  
 
@@ -41,3 +43,6 @@ WIKI_URL_BASE = "https://de.wikipedia.org" # German
 ```python
 WIKI_URL_BASE = "https://zh.wikipedia.org" # Chinese
 ``` 
+
+# Seeds
+Optionally, you can pass a third argument specifying the seed you want to use. The program will also output the seed it used. This feature is useful for debugging, but if the _any_ of the articles in the chain are edited, you won't get the same results even when using the same seed.
