@@ -11,6 +11,18 @@ WIKI_URL_BASE = 'https://en.wikipedia.org'  # Change this url if you want wikipe
 REGEX_PATTERN = re.compile(r'/wiki/\w+')
 
 
+def show_usage():
+    print("USAGE:\n"
+          "NOTE: You may need to put the link in quotes if using Powershell \n"
+          "wander.py [Wikipedia article link] [number of links to click]\n"
+          "wander.py help\n"
+          "wander.py (defaults to Wikipedia page for python and clicks 25 links)\n")
+
+
+def get_article_name(link):
+    return link.split("/")[-1].replace("_", " ")
+
+
 def follow_links_wikipedia(link, num_links_to_click, iterations=0):
     """Recursive function that randomly follows links in a wikipedia page"""
     if iterations == num_links_to_click:
@@ -27,16 +39,8 @@ def follow_links_wikipedia(link, num_links_to_click, iterations=0):
     if len(page_links) == 0:
         return link
     new_link = f"{WIKI_URL_BASE}{random.choice(page_links)}"
-    print(f"Visiting: {new_link}")
+    print(f"Visiting: {get_article_name(new_link)} | Link: {new_link}")
     return follow_links_wikipedia(new_link, num_links_to_click, iterations + 1)
-
-
-def show_usage():
-    print("USAGE:\n"
-          "NOTE: You may need to put the link in quotes if using Powershell \n"
-          "wander.py [Wikipedia article link] [number of links to click]\n"
-          "wander.py help\n"
-          "wander.py (defaults to Wikipedia page for python and clicks 25 links)\n")
 
 
 def main():
@@ -82,9 +86,11 @@ def main():
         start = DEFAULT_START
         iterations = DEFAULT_ITERATIONS
 
-    print(f"Starting at: {start}")
     print("")
-    print(f"You ended up at: {follow_links_wikipedia(start, iterations)}")
+    end = follow_links_wikipedia(start, iterations)
+    print(f"You started at: {get_article_name(start)} | Link: {start}")
+    print(f"You wandered to: {get_article_name(end)} | Link: {end}")
+    print("")
 
 
 if __name__ == '__main__':
