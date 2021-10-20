@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 DEFAULT_START = 'https://en.Wikipedia.org/wiki/Python_(programming_language)'
 DEFAULT_ITERATIONS = 25
-WIKI_URL_BASE = 'https://en.Wikipedia.org'  # Change this url if you want wikipedia in a different language
+WIKI_URL_BASE = 'https://en.wikipedia.org'  # Change this url if you want wikipedia in a different language
 REGEX_PATTERN = re.compile(r'/wiki/\w+')
 
 
