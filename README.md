@@ -27,7 +27,7 @@ allowing me to sit back and relax while a computer does the hard work of clickin
 
 `wander.py help`  
 
-`wander.py` Starts at the Wikipedie page for Python and clicks 25 links
+`wander.py` Starts at the Wikipedia page for Python and clicks 25 links
 
 ## Other Languages
 
