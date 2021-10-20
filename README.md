@@ -5,9 +5,9 @@ allowing me to sit back and relax while a computer does the hard work of clickin
 
 If you want to wander Wikipedia in a language other than English, simply change the WIKI_URL_BASE variable to the base Wikpedia URL of your target language.    
 Examples:  
-WIKI_URL_BASE = "https://es.Wikipedia.org" # Spanish  
-WIKI_URL_BASE = "https://de.Wikipedia.org" # German    
-WIKI_URL_BASE = "https://zh.Wikipedia.org" # Chinese
+WIKI_URL_BASE = "https://es.wikipedia.org" # Spanish  
+WIKI_URL_BASE = "https://de.wikipedia.org" # German    
+WIKI_URL_BASE = "https://zh.wikipedia.org" # Chinese
 
 
 USAGE:  
