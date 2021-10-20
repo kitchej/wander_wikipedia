@@ -41,7 +41,6 @@ def show_usage():
 
 def main():
     if len(sys.argv) > 1:
-
         if sys.argv[1] == 'help':
             print("\n"
                   "WANDER.PY - Kill some time by wandering around Wikipedia\n"
@@ -58,11 +57,7 @@ def main():
                 iterations = sys.argv[2]
             except IndexError:
                 print(f"Not enough arguments\n")
-                print("USAGE:\n"
-                      "NOTE: You may need to put the link in quotes if using Powershell \n"
-                      "wander.py [Wikipedia article link] [number of links to click]\n"
-                      "wander.py help\n"
-                      "wander.py (defaults to Wikipedia page for Python and clicks 25 links)\n")
+                show_usage()
                 return
 
             if WIKI_URL_BASE not in start:
@@ -83,7 +78,6 @@ def main():
                       f"Must be an positive, non-zero integer\n")
                 show_usage()
                 return
-
     else:
         start = DEFAULT_START
         iterations = DEFAULT_ITERATIONS
