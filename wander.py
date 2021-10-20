@@ -20,7 +20,7 @@ def show_usage():
 
 
 def get_article_name(link):
-    return link.split("/")[-1].replace("_", " ")
+    return link.split("/")[-1].replace("_", " ").title()
 
 
 def follow_links_wikipedia(link, num_links_to_click, iterations=0):
