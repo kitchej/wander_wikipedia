@@ -8,7 +8,8 @@ from bs4 import BeautifulSoup
 DEFAULT_START = 'https://en.Wikipedia.org/wiki/Python_(programming_language)'
 DEFAULT_ITERATIONS = 25
 WIKI_URL_BASE = 'https://en.wikipedia.org'  # Change this url if you want wikipedia in a different language
-REGEX_PATTERN = re.compile(r'/wiki/\w+')
+WIKI_ARTICLE_PATTERN = re.compile(r'/wiki/\w+')
+URL_PATTERN = re.compile(r'https?://.+\.org.+')
 
 
 def show_usage():
@@ -36,7 +37,7 @@ def follow_links_wikipedia(link, num_links_to_click, iterations=0):
     soup = BeautifulSoup(html.text, 'html.parser')
     a_tags = soup.find_all('a')
     page_links = [tag.get('href') for tag in a_tags if tag.get('href') is not None and
-                  re.fullmatch(REGEX_PATTERN, tag.get('href')) is not None and
+                  re.fullmatch(WIKI_ARTICLE_PATTERN, tag.get('href')) is not None and
                   tag.get('href') != "/wiki/Main_Page"]
     if len(page_links) == 0:
         return link
@@ -73,6 +74,12 @@ def main():
                 seed = random.randint(0, sys.maxsize)
             except ValueError:
                 print(f"Bad argument {sys.argv[3]} for seed. Seed must be an integer")
+                show_usage()
+                return
+
+            if not re.fullmatch(URL_PATTERN, start):
+                print(f"Bad argument {start} for starting link. Must be a valid Wikipedia Article Link\n"
+                      f"Example: https://en.Wikipedia.org/wiki/Python_(programming_language)\n")
                 show_usage()
                 return
 
