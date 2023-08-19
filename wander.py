@@ -25,10 +25,28 @@ def get_article_name(link):
     return link.split("/")[-1].replace("_", " ").title()
 
 
-def follow_links_wikipedia(link, num_links_to_click, iterations=0):
+def follow_links(starting_link, num_links_to_click):
+    link = starting_link
+    for _ in range(num_links_to_click):
+        html = requests.get(link)
+        if html.status_code == 404:
+            print(f"Link: {link} cannot be reached")
+            return link
+        soup = BeautifulSoup(html.text, 'html.parser')
+        a_tags = soup.find_all('a')
+        page_links = [tag.get('href') for tag in a_tags if tag.get('href') is not None and
+                      re.fullmatch(WIKI_ARTICLE_PATTERN, tag.get('href')) is not None and
+                      tag.get('href') != "/wiki/Main_Page"]
+        if len(page_links) == 0:
+            return link
+        link = f"{WIKI_URL_BASE}{random.choice(page_links)}"
+        print(f"Visiting: {get_article_name(link)} | Link: {link}")
+    return link
+
+
+def follow_links_recursive(link, num_links_to_click, iterations=0):
     """Recursive function that randomly follows links in a wikipedia page"""
     if iterations == num_links_to_click:
-        print("")
         return link
     html = requests.get(link)
     if html.status_code == 404:
@@ -43,7 +61,7 @@ def follow_links_wikipedia(link, num_links_to_click, iterations=0):
         return link
     new_link = f"{WIKI_URL_BASE}{random.choice(page_links)}"
     print(f"Visiting: {get_article_name(new_link)} | Link: {new_link}")
-    return follow_links_wikipedia(new_link, num_links_to_click, iterations + 1)
+    return follow_links_recursive(new_link, num_links_to_click, iterations + 1)
 
 
 def main():
@@ -105,10 +123,8 @@ def main():
         start = DEFAULT_START
         iterations = DEFAULT_ITERATIONS
         seed = random.randint(0, sys.maxsize)
-
     random.seed(seed)
-    print("")
-    end = follow_links_wikipedia(start, iterations)
+    end = follow_links(start, iterations)
     print(f"You started at: {get_article_name(start)} | Link: {start}")
     print(f"You wandered to: {get_article_name(end)} | Link: {end}")
     print(f"Seed: {seed}")
