@@ -1,0 +1,17 @@
+FIND HITLER
+
+Objective: From any article on wikipedia, follow the links within the article until we reach the article for Adolf Hitler
+
+SOLUTION 1 - TOPIC HOPPING:
+
+* Once we get to Germany, the search is over and the next step is to get the link for Adolf Hitler.
+
+* In order to get to the article for germany we need to get to pages that pertain to geography, then search for articles about Europe.
+
+* The main hurdle with this "topic hopping" method is determining which pages correspond to the topics we are looking for.
+
+TRY 1:
+    1.) Continue to follow links until the pages for either Europe, Germany or Adolf Hilter are reached
+    2.) If Adolf Hitler, then we are done
+    3.) If Germany, find link for hitler
+    4.) If Europe, then go to germany, then to hitler
